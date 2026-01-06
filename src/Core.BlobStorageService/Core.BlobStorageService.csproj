@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\glacialbytes.core.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRuleSet>..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>GlacialBytes.Core.BlobStorageService</AssemblyName>
+    <RootNamespace>GlacialBytes.Core.BlobStorageService</RootNamespace>
+    <Authors>Stanislav A. Kychanov</Authors>
+    <Company>Glacial Bytes</Company>
+    <Product>Glacial Bytes core platform blob storage service.</Product>
+    <Copyright>2025 © Glacial Bytes.</Copyright>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.AspNetCore.OpenApi" />-->
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.BlobStorageService.ServiceDefaults\Core.BlobStorageService.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.projitems" Label="Shared" />
+
+</Project>

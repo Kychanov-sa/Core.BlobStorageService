@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\glacialbytes.core.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
+    <AssemblyName>GlacialBytes.Core.BlobStorageService.RestClient</AssemblyName>
+    <RootNamespace>GlacialBytes.Core.BlobStorageService</RootNamespace>
+    <Authors>Stanislav A. Kychanov</Authors>
+    <Company>Glacial Bytes</Company>
+    <Product>Glacial Bytes REST client for blob storage service.</Product>
+    <Copyright>2025 © Glacial Bytes.</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit" />
+    <PackageReference Include="Refit.HttpClientFactory" />
+  </ItemGroup>
+
+  <Import Project="..\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.projitems" Label="Shared" />
+
+</Project>

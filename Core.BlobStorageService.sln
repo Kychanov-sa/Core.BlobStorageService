@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.BlobStorageService", "src\Core.BlobStorageService\Core.BlobStorageService.csproj", "{558F0C0F-E9FA-41D4-81EA-C3BD91E537C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.BlobStorageService.AppHost", "src\Core.BlobStorageService.AppHost\Core.BlobStorageService.AppHost.csproj", "{82350F0A-05B9-4A65-96D5-539316E254D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.BlobStorageService.ServiceDefaults", "src\Core.BlobStorageService.ServiceDefaults\Core.BlobStorageService.ServiceDefaults.csproj", "{445B8D65-84A8-47C1-A883-966D2FC900A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{52C703D0-721B-4BAA-BE30-4C4A2862BC35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.BlobStorageService.RestClient", "src\Core.BlobStorageService.RestClient\Core.BlobStorageService.RestClient.csproj", "{6BCD0DA0-0E71-4C9F-BC7C-8D94CD906168}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Core.BlobStorageService.ApiContracts", "src\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.shproj", "{09CE7CF3-050D-48D7-9D0A-E41C46878189}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72B97F5E-F54C-4AD5-B0ED-B118F5DE0597}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{558F0C0F-E9FA-41D4-81EA-C3BD91E537C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{558F0C0F-E9FA-41D4-81EA-C3BD91E537C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{558F0C0F-E9FA-41D4-81EA-C3BD91E537C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{558F0C0F-E9FA-41D4-81EA-C3BD91E537C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82350F0A-05B9-4A65-96D5-539316E254D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82350F0A-05B9-4A65-96D5-539316E254D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82350F0A-05B9-4A65-96D5-539316E254D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82350F0A-05B9-4A65-96D5-539316E254D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{445B8D65-84A8-47C1-A883-966D2FC900A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{445B8D65-84A8-47C1-A883-966D2FC900A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{445B8D65-84A8-47C1-A883-966D2FC900A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{445B8D65-84A8-47C1-A883-966D2FC900A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BCD0DA0-0E71-4C9F-BC7C-8D94CD906168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BCD0DA0-0E71-4C9F-BC7C-8D94CD906168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BCD0DA0-0E71-4C9F-BC7C-8D94CD906168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BCD0DA0-0E71-4C9F-BC7C-8D94CD906168}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.projitems*{09ce7cf3-050d-48d7-9d0a-e41c46878189}*SharedItemsImports = 13
+		src\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.projitems*{558f0c0f-e9fa-41d4-81ea-c3bd91e537c8}*SharedItemsImports = 5
+		src\Core.BlobStorageService.ApiContracts\Core.BlobStorageService.ApiContracts.projitems*{6bcd0da0-0e71-4c9f-bc7c-8d94cd906168}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
