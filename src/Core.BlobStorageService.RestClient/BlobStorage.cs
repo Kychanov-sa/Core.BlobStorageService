@@ -49,7 +49,6 @@ namespace GlacialBytes.Core.BlobStorageService
       return blob.Length;
     }
 
-
     /// <summary>
     /// Возвращает хэш BLOB объекта.
     /// </summary>
@@ -62,19 +61,6 @@ namespace GlacialBytes.Core.BlobStorageService
     {
       var blob = await GetBlobDescription(blobId, cancellationToken);
       return blob.Hash;
-    }
-
-
-    /// <summary>
-    /// Возвращает признак удалённого BLOB объекта.
-    /// </summary>
-    /// <param name="blobId">Идентификатор BLOB объекта.</param>
-    /// <param name="cancellationToken">Токен отмены.</param>
-    /// <returns>true если BLOB объект был удалён и находится в корзине, иначе false.</returns>
-    public async Task<bool> IsBlobDeleted(Guid blobId, CancellationToken cancellationToken = default)
-    {
-      var blob = await GetBlobDescription(blobId, cancellationToken);
-      return blob.IsDeleted;
     }
 
     /// <summary>
