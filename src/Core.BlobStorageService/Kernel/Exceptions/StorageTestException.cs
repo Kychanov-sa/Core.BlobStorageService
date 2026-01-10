@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Domain.Exceptions;
+﻿namespace GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
 
 /// <summary>
 /// Исключение при проверке хранилища.

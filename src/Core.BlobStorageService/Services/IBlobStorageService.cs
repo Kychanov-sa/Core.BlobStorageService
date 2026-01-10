@@ -1,4 +1,4 @@
-﻿using GlacialBytes.Core.BlobStorageService.Domain;
+﻿using GlacialBytes.Core.BlobStorageService.Kernel;
 using GlacialBytes.Core.BlobStorageService.Exceptions;
 using GlacialBytes.Core.BlobStorageService.Services.Results;
 
@@ -10,12 +10,16 @@ namespace GlacialBytes.Core.BlobStorageService.Services;
 public interface IBlobStorageService
 {
   /// <summary>
+  /// Признак архивного хранилища.
+  /// </summary>
+  bool IsArchiveStorage { get; }
+
+  /// <summary>
   /// Возвращает BLOB объект.
   /// </summary>
   /// <param name="blobId">Идентификатор BLOB объекта.</param>
-  /// <param name="cancellationToken">Токен отмены.</param>
   /// <returns>Описание BLOB объекта, либо null, если объект не найден.</returns>
-  Task<BlobEntity?> GetBlob(Guid blobId, CancellationToken cancellationToken);
+  BlobInfo? FindBlob(BlobId blobId);
 
   /// <summary>
   /// Копировать бинарные данные.
@@ -25,7 +29,8 @@ public interface IBlobStorageService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <exception cref="BlobNotFoundException">Объект не найден.</exception>
   /// <exception cref="ServiceContractException">Идентификатор целевого и исходного объекта совпадает.</exception>
-  Task<CreateBlobResult> CopyBlob(Guid sourceBlobId, Guid destBlobId, CancellationToken cancellationToken);
+  /// <returns>Результат копирования объекта.</returns>
+  Task<CreateBlobResult> CopyBlob(BlobId sourceBlobId, BlobId destBlobId, CancellationToken cancellationToken);
 
   /// <summary>
   /// Удалить бинарные данные.
@@ -33,7 +38,7 @@ public interface IBlobStorageService
   /// <param name="blobId">Идентификатор BLOB объекта.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <exception cref="BlobNotFoundException">Объект не найден.</exception>
-  Task DeleteBlob(Guid blobId, CancellationToken cancellationToken);
+  Task DeleteBlob(BlobId blobId, CancellationToken cancellationToken);
 
   /// <summary>
   /// Отменить удаление бинарных данных.
@@ -42,7 +47,8 @@ public interface IBlobStorageService
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <exception cref="BlobNotFoundException">Объект не найден.</exception>
   /// <exception cref="ServiceContractException">Восстанавливаемый объект не числится среди удалённых.</exception>
-  Task<CreateBlobResult> RestoreBlob(Guid blobId, CancellationToken cancellationToken);
+  /// <returns>Результат восстановления объекта.</returns>
+  Task<CreateBlobResult> RestoreBlob(BlobId blobId, CancellationToken cancellationToken);
 
   /// <summary>
   /// Записать чанк данных BLOB объекта.
@@ -52,8 +58,8 @@ public interface IBlobStorageService
   /// <param name="size">Размер чанка записываемых данных, либо -1, если необходимо записать все данные.</param>
   /// <param name="dataStream">Данные для записи.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
-  /// <returns>Описание созданного объекта.</returns>
-  Task<BlobEntity> WriteBlobChunk(Guid blobId, long offset, int size, Stream dataStream, CancellationToken cancellationToken);
+  /// <returns>Результат записи объекта.</returns>
+  Task<WriteBlobResult> WriteBlobChunk(BlobId blobId, long offset, long size, Stream dataStream, CancellationToken cancellationToken);
 
   /// <summary>
   /// Считывает чанк данных BLOB объекта.
@@ -63,6 +69,6 @@ public interface IBlobStorageService
   /// <param name="size">Размер чанка читаемых данных, либо -1, если необходимо прочитать все данные.</param>
   /// <param name="cancellationToken">Токен отмены.</param>
   /// <exception cref="BlobNotFoundException">Объект не найден.</exception>
-  /// <returns>Поток с данными.</returns>
-  Task<Stream> ReadBlobChunk(Guid blobId, long offset, int size, CancellationToken cancellationToken);
+  /// <returns>Результат чтения данных.</returns>
+  Task<ReadBlobResult> ReadBlobChunk(BlobId blobId, long offset, long size, CancellationToken cancellationToken);
 }

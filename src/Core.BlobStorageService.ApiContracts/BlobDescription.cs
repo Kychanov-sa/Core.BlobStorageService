@@ -34,9 +34,4 @@ public class BlobDescription
   /// Признак объекта, доступного только для чтения.
   /// </summary>
   public bool IsReadOnly { get; set; }
-
-  /// <summary>
-  /// Признак удалённого объекта, находящегося в корзине.
-  /// </summary>
-  public bool IsDeleted { get; set; }
 }

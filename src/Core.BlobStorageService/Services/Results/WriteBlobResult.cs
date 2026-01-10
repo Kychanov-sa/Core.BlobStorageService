@@ -3,14 +3,14 @@
 namespace GlacialBytes.Core.BlobStorageService.Services.Results;
 
 /// <summary>
-/// Результат создания BLOB объекта.
+/// Результат записи BLOB объекта.
 /// </summary>
-public class CreateBlobResult : BlobStorageResult
+public class WriteBlobResult : BlobStorageResult
 {
   /// <summary>
-  /// Дата создания.
+  /// Дата изменения.
   /// </summary>
-  public DateTime? Created { get; init; }
+  public DateTime? Modified { get; init; }
 
   /// <summary>
   /// Хэш объекта.
@@ -20,20 +20,20 @@ public class CreateBlobResult : BlobStorageResult
   /// <summary>
   /// Возвращает результат с успешным выполнением операции.
   /// </summary>
-  /// <param name="created">Дата создания.</param>
+  /// <param name="modified">Дата изменения.</param>
   /// <param name="hash">Хэш объекта.</param>
-  public static CreateBlobResult Success(DateTime created, string? hash) => new() { Succeeded = true, Created = created, Hash = hash, };
+  public static WriteBlobResult Success(DateTime modified, string? hash) => new() { Succeeded = true, Modified = modified, Hash = hash, };
 
   /// <summary>
   /// Создает результат с ошибками.
   /// </summary>
   /// <param name="errors">Ошибки.</param>
   /// <returns>Результат.</returns>
-  public static new CreateBlobResult Failed(params BlobStorageError[] errors)
+  public static new WriteBlobResult Failed(params BlobStorageError[] errors)
   {
-    var result = new CreateBlobResult { Succeeded = false };
+    var result = new WriteBlobResult { Succeeded = false };
     if (errors != null)
       result.Errors.AddRange(errors);
     return result;
-  }
+  } 
 }
