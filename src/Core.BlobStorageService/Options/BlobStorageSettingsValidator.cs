@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace GlacialBytes.Core.BlobStorageService.Options;
+namespace GlacialBytes.Core.BlobStorage.Options;
 
 /// <summary>
 /// Валидатор настроек хранилища.

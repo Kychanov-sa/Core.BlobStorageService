@@ -1,6 +1,6 @@
 ﻿using LocalFileInfo = System.IO.FileInfo;
 
-namespace GlacialBytes.Core.BlobStorageService.Persistence;
+namespace GlacialBytes.Core.BlobStorage.Persistence;
 
 /// <summary>
 /// Локальная файловая система.

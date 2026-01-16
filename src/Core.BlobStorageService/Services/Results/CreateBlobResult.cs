@@ -1,6 +1,6 @@
-﻿using GlacialBytes.Core.BlobStorageService.Services.Errors;
+﻿using GlacialBytes.Core.BlobStorage.Services.Errors;
 
-namespace GlacialBytes.Core.BlobStorageService.Services.Results;
+namespace GlacialBytes.Core.BlobStorage.Services.Results;
 
 /// <summary>
 /// Результат создания BLOB объекта.

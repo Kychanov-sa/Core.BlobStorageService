@@ -1,7 +1,7 @@
 ﻿using Refit;
-using GlacialBytes.Core.BlobStorageService.Exceptions;
+using GlacialBytes.Core.BlobStorage.Exceptions;
 
-namespace GlacialBytes.Core.BlobStorageService
+namespace GlacialBytes.Core.BlobStorage.Client
 {
   /// <summary>
   /// Хранилище BLOB объектов.

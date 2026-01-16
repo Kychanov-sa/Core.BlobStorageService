@@ -1,8 +1,8 @@
-﻿using GlacialBytes.Core.BlobStorageService.Services.Errors;
+﻿using GlacialBytes.Core.BlobStorage.Services.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace GlacialBytes.Core.BlobStorageService.Endpoints;
+namespace GlacialBytes.Core.BlobStorage.Endpoints;
 
 /// <summary>
 /// Конвертер ошибок сервиса.

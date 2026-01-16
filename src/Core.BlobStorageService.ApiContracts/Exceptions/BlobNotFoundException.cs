@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Exceptions;
+﻿namespace GlacialBytes.Core.BlobStorage.Exceptions;
 
 /// <summary>
 /// BLOB объект не найден.

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace GlacialBytes.Core.BlobStorageService;
+namespace GlacialBytes.Core.BlobStorage;
 
 /// <summary>
 /// HTTP заголовки хранилища BLOB объектов.

@@ -1,11 +1,9 @@
-﻿using GlacialBytes.Core.BlobStorageService.Kernel;
-using GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
+﻿using GlacialBytes.Core.BlobStorage.Kernel;
+using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
 using Polly;
 using Polly.Retry;
-using System.IO;
-using System.IO.Pipes;
 
-namespace GlacialBytes.Core.BlobStorageService.Persistence;
+namespace GlacialBytes.Core.BlobStorage.Persistence;
 
 /// <summary>
 /// Файловое хранилище.
@@ -184,7 +182,7 @@ internal class FileStorage(IFileSystem fileSystem, BlobStorageMode mode, bool us
 
     // Если отключено безопасное удаление, то мы не можем восстановить файл
     if (!useSafeDelete)
-      throw new OperationFailedException("Storage is not supporting restoring operations.", blobId);
+      throw new OperationNotAllowedException(blobId);
 
     string restoringBlobFileName = Path.Combine(RecycleBinDirectoryName, $"{blobId}.blob");
     if (!fileSystem.IsFileExist(restoringBlobFileName))
@@ -214,13 +212,16 @@ internal class FileStorage(IFileSystem fileSystem, BlobStorageMode mode, bool us
     if (!blobFileExists && offset > 0)
       throw new OperationNotAllowedException(blobId);
 
+    // Убедимся, что папка для восстанавливаемого файла блоба создана
+    EnsureDirectoryExists(Path.GetDirectoryName(blobFileName)!);
+
     var writingOptions = new FileStreamOptions
     {
       Mode = blobFileExists ? FileMode.Truncate : FileMode.CreateNew,
       Access = FileAccess.Write,
       Options = FileOptions.WriteThrough,
       BufferSize = 0,
-      PreallocationSize = dataStream.Length,
+      PreallocationSize = blobFileExists ? 0 : dataStream.Length,
     };
 
     using var blobFileStream = fileSystem.OpenFileStream(blobFileName, writingOptions);

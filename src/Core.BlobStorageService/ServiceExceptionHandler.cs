@@ -1,9 +1,9 @@
-﻿using GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
+﻿using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace GlacialBytes.Core.BlobStorageService;
+namespace GlacialBytes.Core.BlobStorage;
 
 /// <summary>
 /// Обработчик исключений сервиса.

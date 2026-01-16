@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace GlacialBytes.Core.BlobStorageService.Options;
+namespace GlacialBytes.Core.BlobStorage.Options;
 
 /// <summary>
 /// Расширение построителя опций.

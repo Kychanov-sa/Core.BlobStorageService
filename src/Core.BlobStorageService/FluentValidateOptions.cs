@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Options;
 
-namespace GlacialBytes.Core.BlobStorageService;
+namespace GlacialBytes.Core.BlobStorage;
 
 /// <summary>
 /// Валидация опций через FluentValidation.

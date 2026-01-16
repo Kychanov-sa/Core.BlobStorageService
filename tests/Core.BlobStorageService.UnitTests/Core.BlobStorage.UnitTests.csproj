@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core.BlobStorageService\Core.BlobStorageService.csproj" />
+    <ProjectReference Include="..\..\src\Core.BlobStorageService\Core.BlobStorage.csproj" />
   </ItemGroup>
 
 </Project>

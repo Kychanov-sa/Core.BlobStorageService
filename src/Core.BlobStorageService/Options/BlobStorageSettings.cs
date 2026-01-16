@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GlacialBytes.Core.BlobStorageService.Options;
+namespace GlacialBytes.Core.BlobStorage.Options;
 
 /// <summary>
 /// Настройки хранилища.

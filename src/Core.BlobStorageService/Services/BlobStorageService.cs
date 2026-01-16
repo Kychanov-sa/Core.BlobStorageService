@@ -1,11 +1,11 @@
-﻿using GlacialBytes.Core.BlobStorageService.Kernel;
-using GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
-using GlacialBytes.Core.BlobStorageService.Options;
-using GlacialBytes.Core.BlobStorageService.Services.Errors;
-using GlacialBytes.Core.BlobStorageService.Services.Results;
+﻿using GlacialBytes.Core.BlobStorage.Kernel;
+using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
+using GlacialBytes.Core.BlobStorage.Options;
+using GlacialBytes.Core.BlobStorage.Services.Errors;
+using GlacialBytes.Core.BlobStorage.Services.Results;
 using Microsoft.Extensions.Options;
 
-namespace GlacialBytes.Core.BlobStorageService.Services;
+namespace GlacialBytes.Core.BlobStorage.Services;
 
 /// <summary>
 /// Сервис хранения BLOB объектов.

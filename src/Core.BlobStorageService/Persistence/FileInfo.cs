@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Persistence;
+﻿namespace GlacialBytes.Core.BlobStorage.Persistence;
 
 /// <summary>
 /// Информация по локальному файлу.

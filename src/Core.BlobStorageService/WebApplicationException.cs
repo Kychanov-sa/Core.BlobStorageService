@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService;
+﻿namespace GlacialBytes.Core.BlobStorage;
 
 /// <summary>
 /// Исключение веб-приложения.

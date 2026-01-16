@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Services.Errors;
+﻿namespace GlacialBytes.Core.BlobStorage.Services.Errors;
 
 /// <summary>
 /// Коды ошибок хранилища.

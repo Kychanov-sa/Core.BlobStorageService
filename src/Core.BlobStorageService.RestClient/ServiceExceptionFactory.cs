@@ -1,10 +1,10 @@
-﻿using GlacialBytes.Core.BlobStorageService.Exceptions;
+﻿using GlacialBytes.Core.BlobStorage.Exceptions;
 using Refit;
 using System.Text.Json;
 using System.Net.Http.Json;
 using System.Net;
 
-namespace GlacialBytes.Core.BlobStorageService;
+namespace GlacialBytes.Core.BlobStorage.Client;
 
 /// <summary>
 /// Фабрика исключений сервиса.

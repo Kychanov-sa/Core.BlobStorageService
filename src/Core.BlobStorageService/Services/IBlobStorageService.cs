@@ -1,8 +1,8 @@
-﻿using GlacialBytes.Core.BlobStorageService.Kernel;
-using GlacialBytes.Core.BlobStorageService.Exceptions;
-using GlacialBytes.Core.BlobStorageService.Services.Results;
+﻿using GlacialBytes.Core.BlobStorage.Kernel;
+using GlacialBytes.Core.BlobStorage.Exceptions;
+using GlacialBytes.Core.BlobStorage.Services.Results;
 
-namespace GlacialBytes.Core.BlobStorageService.Services;
+namespace GlacialBytes.Core.BlobStorage.Services;
 
 /// <summary>
 /// Сервис хранения BLOB объектов.

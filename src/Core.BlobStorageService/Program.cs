@@ -1,11 +1,12 @@
-﻿
-using FluentValidation;
-using GlacialBytes.Core.BlobStorageService.Endpoints;
-using GlacialBytes.Core.BlobStorageService.Options;
-using Microsoft.AspNetCore.Http.Features;
-using System.Diagnostics;
+﻿using FluentValidation;
+using GlacialBytes.Core.BlobStorage.Endpoints;
+using GlacialBytes.Core.BlobStorage.Kernel;
+using GlacialBytes.Core.BlobStorage.Options;
+using GlacialBytes.Core.BlobStorage.Persistence;
+using GlacialBytes.Core.BlobStorage.Services;
+using Microsoft.Extensions.Options;
 
-namespace GlacialBytes.Core.BlobStorageService;
+namespace GlacialBytes.Core.BlobStorage;
 
 /// <summary>
 /// Основной класс приложения.
@@ -52,9 +53,33 @@ public class Program
     });
     builder.Services.AddExceptionHandler<ServiceExceptionHandler>();
 
-    builder.Services.AddAuthorization();
+    // Подключаем сервисы хранилища
+    builder.Services.AddSingleton<IFileSystem, LocalFileSystem>((sp) =>
+    {
+      var options = sp.GetRequiredService<IOptions<BlobStorageSettings>>();
+      return new LocalFileSystem(options.Value.StorageDirectory);
+    });
+    builder.Services.AddSingleton<IBlobStorage, FileStorage>((sp) =>
+    {
+      var options = sp.GetRequiredService<IOptions<BlobStorageSettings>>();
+      var fileSystem = sp.GetRequiredService<IFileSystem>();
+      var mode = options.Value.StorageMode switch
+      {
+        Options.BlobStorageMode.Temporary => Kernel.BlobStorageMode.ReadAndWrite,
+        Options.BlobStorageMode.Persistent => Kernel.BlobStorageMode.ReadAndWrite,
+        Options.BlobStorageMode.Archival => Kernel.BlobStorageMode.ReadAndAppendOnly,
+        _ => Kernel.BlobStorageMode.ReadOnly,
+      };
+      return new FileStorage(fileSystem, mode, options.Value.EnableDeleteToRecycleBin);
+    });
+    builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
 
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+    // Подключаем фоновые задачи
+
+    // Безопасность
+    //builder.Services.AddAuthorization();
+
+    // API
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
@@ -70,25 +95,9 @@ public class Program
     }
 
     app.UseHttpsRedirection();
-    app.UseAuthorization();
+    //app.UseAuthorization();
 
     app.MapBlobsApiEndpoint();
-
-    //app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-    //{
-    //  var forecast = Enumerable.Range(1, 5).Select(index =>
-    //          new WeatherForecast
-    //        {
-    //          Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-    //          TemperatureC = Random.Shared.Next(-20, 55),
-    //          Summary = summaries[Random.Shared.Next(summaries.Length)]
-    //        })
-    //          .ToArray();
-    //  return forecast;
-    //})
-    //.WithName("GetWeatherForecast")
-    //.WithOpenApi();
-
     app.Run();
   }
 }

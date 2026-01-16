@@ -8,8 +8,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\..\glacialbytes.core.snk</AssemblyOriginatorKeyFile>
     <CodeAnalysisRuleSet>..\..\..\StyleCop.ruleset</CodeAnalysisRuleSet>
-    <AssemblyName>GlacialBytes.Core.BlobStorageService.RestClient</AssemblyName>
-    <RootNamespace>GlacialBytes.Core.BlobStorageService</RootNamespace>
+    <AssemblyName>GlacialBytes.Core.BlobStorage.RestClient</AssemblyName>
+    <RootNamespace>GlacialBytes.Core.BlobStorage.Client</RootNamespace>
     <Authors>Stanislav A. Kychanov</Authors>
     <Company>Glacial Bytes</Company>
     <Product>Glacial Bytes REST client for blob storage service.</Product>

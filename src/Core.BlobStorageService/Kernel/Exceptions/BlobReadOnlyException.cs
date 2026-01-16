@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
+﻿namespace GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
 
 /// <summary>
 /// Исключение при операции с хранилищем в режиме только для чтения.

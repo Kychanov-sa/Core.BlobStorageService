@@ -1,6 +1,6 @@
-﻿using GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
+﻿using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
 
-namespace GlacialBytes.Core.BlobStorageService.Kernel;
+namespace GlacialBytes.Core.BlobStorage.Kernel;
 
 /// <summary>
 /// Интерфейс хранилища.

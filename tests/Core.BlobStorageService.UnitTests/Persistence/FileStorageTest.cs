@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using GlacialBytes.Core.BlobStorageService.Kernel;
-using GlacialBytes.Core.BlobStorageService.Kernel.Exceptions;
-using GlacialBytes.Core.BlobStorageService.Persistence;
+using GlacialBytes.Core.BlobStorage.Kernel;
+using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
+using GlacialBytes.Core.BlobStorage.Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
-using FileInfo = GlacialBytes.Core.BlobStorageService.Persistence.FileInfo;
+using FileInfo = GlacialBytes.Core.BlobStorage.Persistence.FileInfo;
 
-namespace Core.BlobStorageService.UnitTests.Persistence;
+namespace Core.BlobStorage.UnitTests.Persistence;
 
 [TestClass]
 public class FileStorageTests
@@ -382,8 +382,8 @@ public class FileStorageTests
   }
 
   [TestMethod]
-  [ExpectedException(typeof(OperationFailedException))]
-  public void Restore_WhenSafeDeleteDisabled_ShouldThrowOperationFailedException()
+  [ExpectedException(typeof(OperationNotAllowedException))]
+  public void Restore_WhenSafeDeleteDisabled_ShouldThrowOperationNotAllowedException()
   {
     // Arrange
     var storageWithoutSafeDelete = new FileStorage(_fileSystemMock.Object, _testMode, false);

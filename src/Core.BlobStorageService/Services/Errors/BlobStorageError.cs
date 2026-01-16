@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorageService.Services.Errors;
+﻿namespace GlacialBytes.Core.BlobStorage.Services.Errors;
 
 /// <summary>
 /// Описание ошибки при работе с хранилищем BLOB объектов.

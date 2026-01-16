@@ -1,6 +1,6 @@
 ﻿using StronglyTypedIds;
 
-namespace GlacialBytes.Core.BlobStorageService.Kernel;
+namespace GlacialBytes.Core.BlobStorage.Kernel;
 
 /// <summary>
 /// Идентификатор BLOB объекта.
