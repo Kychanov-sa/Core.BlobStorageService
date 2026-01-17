@@ -17,7 +17,12 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Core.BlobStorageService.Api
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72B97F5E-F54C-4AD5-B0ED-B118F5DE0597}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CHANGELOG.md = CHANGELOG.md
 		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		README.md = README.md
+		ROADMAP.md = ROADMAP.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.BlobStorage.UnitTests", "tests\Core.BlobStorageService.UnitTests\Core.BlobStorage.UnitTests.csproj", "{08130BF0-AD7B-4FEC-A332-0FB1E8BA4636}"
