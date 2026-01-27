@@ -37,7 +37,7 @@ internal class LocalFileSystem(string rootPath) : IFileSystem
   public DateTime GetFileLastWriteTimeUtc(string path)
   {
     string filePath = Path.Combine(rootPath, path);
-    return File.GetLastAccessTimeUtc(filePath);
+    return File.GetLastWriteTimeUtc(filePath);
   }
 
   /// <summary>
@@ -73,7 +73,7 @@ internal class LocalFileSystem(string rootPath) : IFileSystem
   public bool IsDirectoryEmpty(string path)
   {
     string directoryPath = Path.Combine(rootPath, path);
-    return Directory.EnumerateFileSystemEntries(directoryPath).Any();
+    return !Directory.EnumerateFileSystemEntries(directoryPath).Any();
   }
 
   /// <summary>

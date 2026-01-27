@@ -1,26 +1,24 @@
 ﻿using FluentValidation;
 
-namespace GlacialBytes.Core.BlobStorage.Options;
+namespace GlacialBytes.Core.BlobStorage.Persistence;
 
 /// <summary>
-/// Валидатор настроек хранилища.
+/// Валидатор настроек файлового хранилища.
 /// </summary>
-public class BlobStorageSettingsValidator : AbstractValidator<BlobStorageSettings>
+public class FileStorageSettingsValidator : AbstractValidator<FileStorageSettings>
 {
   /// <summary>
   /// Конструктор.
   /// </summary>
-  public BlobStorageSettingsValidator(IHostEnvironment env)
+  public FileStorageSettingsValidator(IHostEnvironment env)
   {
-    RuleFor(x => x.StorageId).NotEmpty();
-
     RuleFor(x => x.StorageDirectory)
       .NotEmpty()
       .Must(storagePath =>
       {
         return IsValidPath(storagePath, env.IsDevelopment()) && Directory.Exists(storagePath);
       })
-      .WithMessage($"{nameof(BlobStorageSettings.StorageDirectory)} must be a valid local directory path and the directory should exists.");
+      .WithMessage($"{nameof(FileStorageSettings.StorageDirectory)} must be a valid local directory path and the directory should exists.");
   }
 
   /// <summary>
@@ -29,10 +27,9 @@ public class BlobStorageSettingsValidator : AbstractValidator<BlobStorageSetting
   /// <param name="path">Проверямый путь.</param>
   /// <param name="allowRelativePaths">Признак допустимости относительных путей.</param>
   /// <returns>true - если путь корректен, иначе false.</returns>
-  private bool IsValidPath(string path, bool allowRelativePaths = false)
+  private static bool IsValidPath(string path, bool allowRelativePaths = false)
   {
-    bool isValid = true;
-
+    bool isValid;
     try
     {
       string fullPath = Path.GetFullPath(path);

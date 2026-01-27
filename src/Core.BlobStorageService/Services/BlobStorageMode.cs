@@ -1,4 +1,4 @@
-﻿namespace GlacialBytes.Core.BlobStorage.Options;
+﻿namespace GlacialBytes.Core.BlobStorage.Services;
 
 /// <summary>
 /// Режим работы хранилища.

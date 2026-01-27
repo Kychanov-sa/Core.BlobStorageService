@@ -1,6 +1,5 @@
 ﻿using GlacialBytes.Core.BlobStorage.Kernel;
 using GlacialBytes.Core.BlobStorage.Kernel.Exceptions;
-using GlacialBytes.Core.BlobStorage.Options;
 using GlacialBytes.Core.BlobStorage.Services.Errors;
 using GlacialBytes.Core.BlobStorage.Services.Results;
 using Microsoft.Extensions.Options;
@@ -10,16 +9,21 @@ namespace GlacialBytes.Core.BlobStorage.Services;
 /// <summary>
 /// Сервис хранения BLOB объектов.
 /// </summary>
-/// <param name="storage">Хранилище.</param>
+/// <param name="storageFactory">Фабрика хранилищ.</param>
 /// <param name="options">Опции хранилища.</param>
-internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSettings> options) : IBlobStorageService
+internal class BlobStorageService(IBlobStorageFactory storageFactory, IOptions<BlobStorageServiceSettings> options) : IBlobStorageService
 {
+  /// <summary>
+  /// Хранилище.
+  /// </summary>
+  private readonly IBlobStorage _storage = CreateStorage(storageFactory, options.Value);
+
   #region IBlobStorageService
 
   /// <summary>
   /// <see cref="IBlobStorageService.IsArchiveStorage"/>
   /// </summary>
-  public bool IsArchiveStorage { get; } = options.Value.StorageMode == Options.BlobStorageMode.Archival;
+  public bool IsArchiveStorage { get; } = options.Value.StorageMode == BlobStorageMode.Archival;
 
   /// <summary>
   /// <see cref="IBlobStorageService.CopyBlob(BlobId, BlobId, CancellationToken)"/>
@@ -33,7 +37,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
     {
       try
       {
-        var blob = storage.Copy(sourceBlobId.Value, destBlobId.Value, cancellationToken);
+        var blob = _storage.Copy(sourceBlobId.Value, destBlobId.Value, cancellationToken);
         return CreateBlobResult.Success(blob.Created, blob.Hash);
       }
       catch (OperationNotAllowedException ex)
@@ -56,7 +60,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
     {
       try
       {
-        storage.Delete(blobId.Value, cancellationToken);
+        _storage.Delete(blobId.Value, cancellationToken);
       }
       catch (BlobNotExistsException)
       {
@@ -70,7 +74,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
   /// </summary>
   public BlobInfo? FindBlob(BlobId blobId)
   {
-    return storage.Get(blobId.Value);
+    return _storage.Get(blobId.Value);
   }
 
   /// <summary>
@@ -80,7 +84,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
   {
     try
     {
-      var blobStream = await storage.ReadAsync(blobId.Value, offset, size, cancellationToken);
+      var blobStream = await _storage.ReadAsync(blobId.Value, offset, size, cancellationToken);
       return ReadBlobResult.Success(blobStream);
     }
     catch (BlobNotExistsException ex)
@@ -98,7 +102,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
     {
       try
       {
-        var blob = storage.Restore(blobId.Value, cancellationToken);
+        var blob = _storage.Restore(blobId.Value, cancellationToken);
         return CreateBlobResult.Success(blob.Created, blob.Hash);
       }
       catch (OperationNotAllowedException ex)
@@ -119,7 +123,7 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
   {
     try
     {
-      var blob = await storage.WriteAsync(blobId.Value, offset, size, dataStream, cancellationToken);
+      var blob = await _storage.WriteAsync(blobId.Value, offset, size, dataStream, cancellationToken);
       return WriteBlobResult.Success(blob.Modified, blob.Hash);
     }
     catch (OperationNotAllowedException ex)
@@ -128,4 +132,22 @@ internal class BlobStorageService(IBlobStorage storage, IOptions<BlobStorageSett
     }
   }
   #endregion
+
+  /// <summary>
+  /// Создаёт хранилище для BLOB объектов.
+  /// </summary>
+  /// <param name="storageFactory">Фабрика хранилищ.</param>
+  /// <param name="options">Опции.</param>
+  /// <returns>Хранилище BLOB объектов.</returns>
+  private static IBlobStorage CreateStorage(IBlobStorageFactory storageFactory, BlobStorageServiceSettings options)
+  {
+    var mode = options.StorageMode switch
+    {
+      BlobStorageMode.Temporary => Kernel.BlobStorageMode.ReadAndWrite,
+      BlobStorageMode.Persistent => Kernel.BlobStorageMode.ReadAndWrite,
+      BlobStorageMode.Archival => Kernel.BlobStorageMode.ReadAndAppendOnly,
+      _ => Kernel.BlobStorageMode.ReadOnly,
+    };
+    return storageFactory.CreateStorage(mode, options.EnableDeleteToRecycleBin);
+  }
 }

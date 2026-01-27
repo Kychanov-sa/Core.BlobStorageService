@@ -1,10 +1,8 @@
-﻿using FluentValidation;
-using GlacialBytes.Core.BlobStorage.Endpoints;
-using GlacialBytes.Core.BlobStorage.Kernel;
-using GlacialBytes.Core.BlobStorage.Options;
+﻿using GlacialBytes.Core.BlobStorage.Endpoints;
 using GlacialBytes.Core.BlobStorage.Persistence;
 using GlacialBytes.Core.BlobStorage.Services;
-using Microsoft.Extensions.Options;
+using Quartz;
+using Quartz.AspNetCore;
 
 namespace GlacialBytes.Core.BlobStorage;
 
@@ -20,17 +18,6 @@ public class Program
   public static void Main(string[] args)
   {
     var builder = WebApplication.CreateBuilder(args);
-
-    // Валидаторы
-    builder.Services.AddScoped<IValidator<BlobStorageSettings>, BlobStorageSettingsValidator>();
-
-    // Опции
-    builder.Services
-      .AddOptions<BlobStorageSettings>()
-      .BindConfiguration("Storage")
-      .ValidateDataAnnotations()
-      .ValidateFluentValidation()
-      .ValidateOnStart();
 
     // Добавление сервисов в контейнер
     builder.AddServiceDefaults();
@@ -54,27 +41,10 @@ public class Program
     builder.Services.AddExceptionHandler<ServiceExceptionHandler>();
 
     // Подключаем сервисы хранилища
-    builder.Services.AddSingleton<IFileSystem, LocalFileSystem>((sp) =>
-    {
-      var options = sp.GetRequiredService<IOptions<BlobStorageSettings>>();
-      return new LocalFileSystem(options.Value.StorageDirectory);
-    });
-    builder.Services.AddSingleton<IBlobStorage, FileStorage>((sp) =>
-    {
-      var options = sp.GetRequiredService<IOptions<BlobStorageSettings>>();
-      var fileSystem = sp.GetRequiredService<IFileSystem>();
-      var mode = options.Value.StorageMode switch
-      {
-        Options.BlobStorageMode.Temporary => Kernel.BlobStorageMode.ReadAndWrite,
-        Options.BlobStorageMode.Persistent => Kernel.BlobStorageMode.ReadAndWrite,
-        Options.BlobStorageMode.Archival => Kernel.BlobStorageMode.ReadAndAppendOnly,
-        _ => Kernel.BlobStorageMode.ReadOnly,
-      };
-      return new FileStorage(fileSystem, mode, options.Value.EnableDeleteToRecycleBin);
-    });
-    builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
+    AddStorageServices(builder.Services, builder.Configuration);
 
     // Подключаем фоновые задачи
+    AddBackgroundJobs(builder.Services, builder.Configuration);
 
     // Безопасность
     //builder.Services.AddAuthorization();
@@ -99,5 +69,41 @@ public class Program
 
     app.MapBlobsApiEndpoint();
     app.Run();
+  }
+
+  /// <summary>
+  /// Добавляет в коллекцию сервисы хранилища.
+  /// </summary>
+  /// <param name="services">Коллекция сервисов.</param>
+  /// <param name="configuration">Конфигурация приложения.</param>
+  /// <returns>Дополненная коллекция сервисов.</returns>
+  public static IServiceCollection AddStorageServices(IServiceCollection services, IConfiguration configuration)
+  {
+    services.AddFileStorage(configuration.GetSection("FileStorage"));
+    services.AddBlobStorageServices(configuration.GetSection("StorageService"));
+
+    return services;
+  }
+
+  /// <summary>
+  /// Добавляет в коллекцию фоновые задания.
+  /// </summary>
+  /// <param name="services">Коллекция сервисов.</param>
+  /// <returns>Дополненная коллекция сервисов.</returns>
+  public static IServiceCollection AddBackgroundJobs(IServiceCollection services, IConfiguration configuration)
+  {
+    services.AddQuartz(configurator =>
+    {
+      configurator.SchedulerName = "StorageBackgroundOperations";
+      configurator.AddBlobStorageJobs(configuration.GetSection("StorageService"));
+    });
+
+    services.AddQuartzServer(options =>
+    {
+      options.WaitForJobsToComplete = true;
+      options.AwaitApplicationStarted = true;
+    });
+
+    return services;
   }
 }

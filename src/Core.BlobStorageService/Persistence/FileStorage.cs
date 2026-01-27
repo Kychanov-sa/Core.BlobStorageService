@@ -8,6 +8,9 @@ namespace GlacialBytes.Core.BlobStorage.Persistence;
 /// <summary>
 /// Файловое хранилище.
 /// </summary>
+/// <param name="fileSystem">Файловая система.</param>
+/// <param name="mode">Режим работы хранилища.</param>
+/// <param name="useSafeDelete">Признак использования безопасного удаления.</param>
 internal class FileStorage(IFileSystem fileSystem, BlobStorageMode mode, bool useSafeDelete)
   : IBlobStorage
 {
@@ -437,6 +440,9 @@ internal class FileStorage(IFileSystem fileSystem, BlobStorageMode mode, bool us
   {
     foreach (string subDirectoryPath in fileSystem.SearchDirectories(directoryPath))
     {
+      if (Path.GetDirectoryName(subDirectoryPath) == RecycleBinDirectoryName)
+        continue;
+
       DeleteEmptySubDirectories(subDirectoryPath);
       if (fileSystem.IsDirectoryEmpty(subDirectoryPath))
         fileSystem.DeleteDirectory(subDirectoryPath, false);
